@@ -1,6 +1,7 @@
 package com.client_ws.rasmooplus.service.impl;
 
 import com.client_ws.rasmooplus.dto.SubscriptionTypeDto;
+import com.client_ws.rasmooplus.exception.BadRequestException;
 import com.client_ws.rasmooplus.exception.NotFoundException;
 import com.client_ws.rasmooplus.model.SubscriptionType;
 import com.client_ws.rasmooplus.repository.SubscriptionTypeRepository;
@@ -8,6 +9,7 @@ import com.client_ws.rasmooplus.service.SubscriptionTypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,31 +28,47 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
     @Override
     public SubscriptionType findById(Long id) {
-        Optional<SubscriptionType> optionalSubscriptionType = subscriptionTypeRepository.findById(id);
-        if (optionalSubscriptionType.isEmpty()){
-            throw new NotFoundException("SubscritpionType não encontrado");
-        }
-        return optionalSubscriptionType.get();
+        return getSubscriptionType(id);
     }
+
+
 
     @Override
     public SubscriptionType create(SubscriptionTypeDto dto) {
+        if(Objects.nonNull(dto.getId())){
+            throw new BadRequestException("O id deve ser nulo");
+        }
         return subscriptionTypeRepository.save(SubscriptionType.builder()
                         .id(dto.getId())
                         .name(dto.getName())
-                        .acessMonth(dto.getAcessMonth())
+                        .accessMonth(dto.getAccessMonth())
                         .price(dto.getPrice())
                         .productKey(dto.getProductKey())
                 .build());
     }
 
     @Override
-    public SubscriptionType update(Long id, SubscriptionType subscriptionType) {
-        return null;
+    public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
+        getSubscriptionType(id);
+        return subscriptionTypeRepository.save(SubscriptionType.builder()
+                .id(id)
+                .name(dto.getName())
+                .accessMonth(dto.getAccessMonth())
+                .price(dto.getPrice())
+                .productKey(dto.getProductKey())
+                .build());
     }
 
     @Override
     public void delete(Long id) {
 
+    }
+
+    private SubscriptionType getSubscriptionType(Long id) {
+        Optional<SubscriptionType> optionalSubscriptionType = subscriptionTypeRepository.findById(id);
+        if (optionalSubscriptionType.isEmpty()){
+            throw new NotFoundException("SubscritpionType não encontrado");
+        }
+        return optionalSubscriptionType.get();
     }
 }

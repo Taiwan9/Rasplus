@@ -17,7 +17,7 @@ public class SubscriptionTypeDto {
 
     private String name;
 
-    private String acessMonth;
+    private String accessMonth;
 
     private BigDecimal price;
 
