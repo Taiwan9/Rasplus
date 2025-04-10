@@ -4,6 +4,7 @@ import com.client_ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client_ws.rasmooplus.dto.wsraspay.OrderDto;
 import com.client_ws.rasmooplus.dto.wsraspay.PaymentDto;
 import com.client_ws.rasmooplus.integration.WsRaspayIntegration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -12,6 +13,18 @@ import java.util.Base64;
 
 @Component
 public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
+
+    @Value("${webservices.raspay.host}")
+    private String raspayHost;
+
+    @Value("${webservices.raspay.v1.customer}")
+    private String customerUrl;
+
+    @Value("${webservices.raspay.v1.order}")
+    private String orderUrl;
+
+    @Value("${webservices.raspay.v1.payment}")
+    private String paymentUrl;
 
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
@@ -29,7 +42,7 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
 
             ResponseEntity<CustomerDto> response =
                     restTemplate.exchange(
-                            "https://raspay-api-61f5fa5fc34c.herokuapp.com/ws-raspay/v1/customer",
+                            raspayHost+customerUrl,
                             HttpMethod.POST,
                             request,
                             CustomerDto.class
@@ -51,7 +64,7 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
 
             ResponseEntity<OrderDto> response =
                     restTemplate.exchange(
-                            "https://raspay-api-61f5fa5fc34c.herokuapp.com/ws-raspay/v1/order",
+                            raspayHost+orderUrl,
                             HttpMethod.POST,
                             request,
                             OrderDto.class
@@ -70,7 +83,7 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
 
             ResponseEntity<Boolean> response =
                     restTemplate.exchange(
-                            "https://raspay-api-61f5fa5fc34c.herokuapp.com/ws-raspay/v1/payment/credit-card/",
+                            raspayHost+paymentUrl,
                             HttpMethod.POST,
                             request,
                             Boolean.class
