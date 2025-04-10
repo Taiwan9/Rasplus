@@ -1,9 +1,12 @@
 package com.client_ws.rasmooplus.service.impl;
 
 import com.client_ws.rasmooplus.dto.PaymentProcessDto;
+import com.client_ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client_ws.rasmooplus.exception.BusinessException;
 import com.client_ws.rasmooplus.exception.NotFoundException;
+import com.client_ws.rasmooplus.integration.WsRaspayIntegration;
 import com.client_ws.rasmooplus.mapper.UserPaymentInfoMapper;
+import com.client_ws.rasmooplus.mapper.wsraspay.CustomerMapper;
 import com.client_ws.rasmooplus.model.User;
 import com.client_ws.rasmooplus.model.UserPaymentInfo;
 import com.client_ws.rasmooplus.repository.UserPaymentInfoRepository;
@@ -18,10 +21,13 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     private final UserRepository userRepository;
     private final UserPaymentInfoRepository userPaymentInfoRepository;
+    private final WsRaspayIntegration wsRaspayIntegration;
 
-    PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository){
+    PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository,
+                           WsRaspayIntegration wsRaspayIntegration){
         this.userRepository = userRepository;
         this.userPaymentInfoRepository = userPaymentInfoRepository;
+        this.wsRaspayIntegration = wsRaspayIntegration;
     }
 
 
@@ -39,6 +45,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         }
 
         //criar ou atualizar usuario raspay
+        CustomerDto customerDto = wsRaspayIntegration.createCustomer(CustomerMapper.build(user));
         //criar o pedido de pagamento
         //processar o pagamento
         //salvar as informações de pagament
