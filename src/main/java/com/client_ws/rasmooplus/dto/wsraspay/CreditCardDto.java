@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreditCardDto {
+    private Long cvv;
     private String documentNumber;
     private Long installments;
     private Long month;
