@@ -1,6 +1,5 @@
 package com.client_ws.rasmooplus.dto;
 
-import com.client_ws.rasmooplus.model.UserPaymentInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,5 +18,5 @@ public class PaymentProcessDto {
 
     @NotNull(message = "Dados do pagamento deve ser iformado")
     @JsonProperty("userPaymentInfo")
-    private UserPaymentInfo userPaymentInfo;
+    private UserPaymentInfoDto userPaymentInfoDto;
 }
