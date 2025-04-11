@@ -60,13 +60,14 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
                 CreditCardMapper.build(dto.getUserPaymentInfoDto(), user.getCpf()));
         Boolean successPayment = wsRaspayIntegration.processPayment(paymentDto);
 
-        if (successPayment) {
+        if (Boolean.TRUE.equals(successPayment)) {
             //salvar as informações de pagament
             UserPaymentInfo userPaymentInfo = UserPaymentInfoMapper.fromDtoToEntity(dto.getUserPaymentInfoDto(), user);
             userPaymentInfoRepository.save(userPaymentInfo);
+            return true;
         }
         //enviar email de criacao de conta
         //retorna o sucesso ou nao do pagamento
-        return null;
+        return false;
     }
 }
