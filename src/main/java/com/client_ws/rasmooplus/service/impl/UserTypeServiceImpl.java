@@ -3,9 +3,11 @@ package com.client_ws.rasmooplus.service.impl;
 import com.client_ws.rasmooplus.model.UserType;
 import com.client_ws.rasmooplus.repository.UserTypeRepository;
 import com.client_ws.rasmooplus.service.UserTypeService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserTypeServiceImpl implements UserTypeService {
     private final UserTypeRepository userTypeRepository;
 

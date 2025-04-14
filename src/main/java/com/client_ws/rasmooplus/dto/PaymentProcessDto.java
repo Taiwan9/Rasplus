@@ -18,7 +18,7 @@ public class PaymentProcessDto {
     private String productKey;
     private BigDecimal discount;
 
-    @NotNull(message = "Dados do pagamento deve ser iformado")
+    @NotNull(message = "dados do pagamento deve ser informado")
     @JsonProperty("userPaymentInfo")
     private UserPaymentInfoDto userPaymentInfoDto;
 }
