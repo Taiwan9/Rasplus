@@ -1,6 +1,6 @@
-package com.client_ws.rasmooplus.repository;
+package com.client_ws.rasmooplus.repository.jpa;
 
-import com.client_ws.rasmooplus.model.SubscriptionType;
+import com.client_ws.rasmooplus.model.jpa.SubscriptionType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

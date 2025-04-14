@@ -1,7 +1,7 @@
 package com.client_ws.rasmooplus.service.impl;
 
-import com.client_ws.rasmooplus.model.UserType;
-import com.client_ws.rasmooplus.repository.UserTypeRepository;
+import com.client_ws.rasmooplus.model.jpa.UserType;
+import com.client_ws.rasmooplus.repository.jpa.UserTypeRepository;
 import com.client_ws.rasmooplus.service.UserTypeService;
 import org.springframework.stereotype.Service;
 

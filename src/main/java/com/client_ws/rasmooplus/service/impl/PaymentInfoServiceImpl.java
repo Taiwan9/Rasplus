@@ -14,10 +14,10 @@ import com.client_ws.rasmooplus.mapper.wsraspay.CreditCardMapper;
 import com.client_ws.rasmooplus.mapper.wsraspay.CustomerMapper;
 import com.client_ws.rasmooplus.mapper.wsraspay.OrderMapper;
 import com.client_ws.rasmooplus.mapper.wsraspay.PaymentMapper;
-import com.client_ws.rasmooplus.model.User;
-import com.client_ws.rasmooplus.model.UserCredentials;
-import com.client_ws.rasmooplus.model.UserPaymentInfo;
-import com.client_ws.rasmooplus.repository.*;
+import com.client_ws.rasmooplus.model.jpa.User;
+import com.client_ws.rasmooplus.model.jpa.UserCredentials;
+import com.client_ws.rasmooplus.model.jpa.UserPaymentInfo;
+import com.client_ws.rasmooplus.repository.jpa.*;
 import com.client_ws.rasmooplus.service.PaymentInfoService;
 
 import com.client_ws.rasmooplus.utils.PasswordUtils;

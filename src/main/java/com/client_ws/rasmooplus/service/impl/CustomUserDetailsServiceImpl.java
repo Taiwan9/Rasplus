@@ -1,8 +1,8 @@
 package com.client_ws.rasmooplus.service.impl;
 
 import com.client_ws.rasmooplus.exception.NotFoundException;
-import com.client_ws.rasmooplus.model.UserCredentials;
-import com.client_ws.rasmooplus.repository.UserDetailsRepository;
+import com.client_ws.rasmooplus.model.jpa.UserCredentials;
+import com.client_ws.rasmooplus.repository.jpa.UserDetailsRepository;
 import com.client_ws.rasmooplus.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

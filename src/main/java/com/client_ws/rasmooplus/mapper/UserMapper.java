@@ -1,9 +1,9 @@
 package com.client_ws.rasmooplus.mapper;
 
 import com.client_ws.rasmooplus.dto.UserDto;
-import com.client_ws.rasmooplus.model.SubscriptionType;
-import com.client_ws.rasmooplus.model.User;
-import com.client_ws.rasmooplus.model.UserType;
+import com.client_ws.rasmooplus.model.jpa.SubscriptionType;
+import com.client_ws.rasmooplus.model.jpa.User;
+import com.client_ws.rasmooplus.model.jpa.UserType;
 
 public class UserMapper {
     public static User fromDtoToEntity(UserDto dto, UserType userType, SubscriptionType subscriptionType){

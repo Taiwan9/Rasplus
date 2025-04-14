@@ -3,7 +3,7 @@ package com.client_ws.rasmooplus.service.impl;
 import com.client_ws.rasmooplus.dto.LoginDto;
 import com.client_ws.rasmooplus.dto.TokenDto;
 import com.client_ws.rasmooplus.exception.BadRequestException;
-import com.client_ws.rasmooplus.model.UserCredentials;
+import com.client_ws.rasmooplus.model.jpa.UserCredentials;
 import com.client_ws.rasmooplus.service.AuthenticationService;
 import com.client_ws.rasmooplus.service.TokenService;
 import com.client_ws.rasmooplus.service.CustomUserDetailsService;

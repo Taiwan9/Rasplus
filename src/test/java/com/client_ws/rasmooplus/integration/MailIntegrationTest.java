@@ -10,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
     @Autowired
     private MailIntegration mailIntegration;
 
-    @Test
-      void createCustomerWhenDtoOk(){
-      mailIntegration.send("clownser1994@gmail.com", "Olá Gmail");
-    }
+
 
 }
