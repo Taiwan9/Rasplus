@@ -8,6 +8,8 @@ import com.client_ws.rasmooplus.mapper.SubscriptionTypeMapper;
 import com.client_ws.rasmooplus.model.SubscriptionType;
 import com.client_ws.rasmooplus.repository.SubscriptionTypeRepository;
 import com.client_ws.rasmooplus.service.SubscriptionTypeService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +27,13 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
     @Override
+    @Cacheable(value = "subscriptionType")
     public List<SubscriptionType> findAll() {
         return subscriptionTypeRepository.findAll();
     }
 
     @Override
+    @Cacheable(value = "subscriptionType", key = "#id")
     public SubscriptionType findById(Long id) {
         return getSubscriptionType(id).add(WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(SubscriptionTypeController.class)
@@ -44,6 +48,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public SubscriptionType create(SubscriptionTypeDto dto) {
         if (Objects.nonNull(dto.getId())) {
@@ -52,6 +57,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoEntity(dto));
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
         getSubscriptionType(id);
@@ -59,6 +65,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoEntity(dto));
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public void delete(Long id) {
         getSubscriptionType(id);
