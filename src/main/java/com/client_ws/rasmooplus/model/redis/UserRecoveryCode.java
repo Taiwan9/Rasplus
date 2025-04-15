@@ -2,6 +2,7 @@ package com.client_ws.rasmooplus.model.redis;
 
 
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class UserRecoveryCode {
     private String id;
 
     @Indexed
+    @Email
     private String email;
 
     private String code;

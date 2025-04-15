@@ -77,20 +77,20 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
         mailIntegration.send(email, "Código de recuperação de conta: "+code, "Código de recuperação de conta");
     }
 
-//    @Override
-//    public boolean recoveryCodeIsValid(String recoveryCode, String email) {
-//
-//        var userRecoveryCodeOpt = userRecoveryCodeRepository.findByEmail(email);
-//
-//        if (userRecoveryCodeOpt.isEmpty()) {
-//            throw new NotFoundException("Usuário não encontrado");
-//        }
-//
-//        UserRecoveryCode userRecoveryCode = userRecoveryCodeOpt.get();
-//
-//        LocalDateTime timeout = userRecoveryCode.getCreationDate().plusMinutes(Long.parseLong(recoveryCodeTimeout));
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        return recoveryCode.equals(userRecoveryCode.getCode()) && now.isBefore(timeout);
-//    }
+    @Override
+    public boolean recoveryCodeIsValid(String recoveryCode, String email) {
+
+        var userRecoveryCodeOpt = userRecoveryCodeRepository.findByEmail(email);
+
+        if (userRecoveryCodeOpt.isEmpty()) {
+            throw new NotFoundException("Usuário não encontrado");
+        }
+
+        UserRecoveryCode userRecoveryCode = userRecoveryCodeOpt.get();
+
+        LocalDateTime timeout = userRecoveryCode.getCreationTime().plusMinutes(Long.parseLong(recoveryCodeTimeout));
+        LocalDateTime now = LocalDateTime.now();
+
+        return recoveryCode.equals(userRecoveryCode.getCode()) && now.isBefore(timeout);
+    }
 }
