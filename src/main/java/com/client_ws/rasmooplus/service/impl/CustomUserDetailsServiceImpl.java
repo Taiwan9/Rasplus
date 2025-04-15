@@ -1,5 +1,6 @@
 package com.client_ws.rasmooplus.service.impl;
 
+import com.client_ws.rasmooplus.dto.CustomUserDatailsDto;
 import com.client_ws.rasmooplus.exception.BadRequestException;
 import com.client_ws.rasmooplus.exception.NotFoundException;
 import com.client_ws.rasmooplus.integration.MailIntegration;
@@ -86,11 +87,23 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
             throw new NotFoundException("Usuário não encontrado");
         }
 
-        UserRecoveryCode userRecoveryCode = userRecoveryCodeOpt.get();
+         UserRecoveryCode userRecoveryCode = userRecoveryCodeOpt.get();
 
         LocalDateTime timeout = userRecoveryCode.getCreationTime().plusMinutes(Long.parseLong(recoveryCodeTimeout));
         LocalDateTime now = LocalDateTime.now();
 
         return recoveryCode.equals(userRecoveryCode.getCode()) && now.isBefore(timeout);
+    }
+
+    @Override
+    public void updatePasswordByRecoveryCode(CustomUserDatailsDto dto) {
+        if (recoveryCodeIsValid( dto.getRecoveryCode(), dto.getEmail())){
+            var customDetails = userDetailsRepository.findByUsername(dto.getEmail());
+
+            UserCredentials userCredentials = customDetails.get();
+            userCredentials.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
+
+            userDetailsRepository.save(userCredentials);
+        }
     }
 }

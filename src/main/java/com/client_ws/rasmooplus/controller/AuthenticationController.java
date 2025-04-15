@@ -1,5 +1,6 @@
 package com.client_ws.rasmooplus.controller;
 
+import com.client_ws.rasmooplus.dto.CustomUserDatailsDto;
 import com.client_ws.rasmooplus.dto.LoginDto;
 import com.client_ws.rasmooplus.dto.TokenDto;
 import com.client_ws.rasmooplus.model.redis.UserRecoveryCode;
@@ -27,13 +28,19 @@ public class AuthenticationController {
     @PostMapping("/recovery-code/send")
     public ResponseEntity<?> sendRecoveryCode(@RequestBody @Valid UserRecoveryCode dto) {
         customUserDetailsService.sendRecoveryCode(dto.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @GetMapping("/recovery-code/")
+    @GetMapping("/recovery-code/password")
     public ResponseEntity<?> recoveryCodeIsValid(@RequestParam ("recoveryCode") String recoveryCode,
                                                  @RequestParam ("email") String email) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(customUserDetailsService.recoveryCodeIsValid(recoveryCode, email));
+    }
+
+    @PatchMapping ("/recovery-code/password")
+    public ResponseEntity<?> sendRecoveryCode(@RequestBody @Valid CustomUserDatailsDto dto) {
+        customUserDetailsService.updatePasswordByRecoveryCode(dto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
