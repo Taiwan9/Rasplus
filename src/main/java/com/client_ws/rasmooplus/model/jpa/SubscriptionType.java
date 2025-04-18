@@ -24,7 +24,7 @@ public class SubscriptionType extends RepresentationModel<SubscriptionType> impl
     private String name;
 
     @Column(name = "access_months")
-    private String accessMonth;
+    private Long accessMonth;
 
     private BigDecimal price;
 

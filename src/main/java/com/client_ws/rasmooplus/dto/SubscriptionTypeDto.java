@@ -24,7 +24,7 @@ public class SubscriptionTypeDto {
     private String name;
 
     @Max(value = 12, message = "não pode ser maior que 12")
-    private String accessMonth;
+    private Long accessMonth;
 
     @NotNull(message = " não pode ser nulo")
     private BigDecimal price;

@@ -23,12 +23,12 @@ public class SubscriptionTypeController {
     private SubscriptionTypeService subscriptionTypeService;
 
 
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SubscriptionType>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
     }
 
-    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionType> findById(@PathVariable("id") Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findById(id));
@@ -36,19 +36,19 @@ public class SubscriptionTypeController {
     }
 
 
-    @PostMapping
+    @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionType> create(@Valid @RequestBody SubscriptionTypeDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionType> update(@PathVariable("id") Long id, @RequestBody SubscriptionTypeDto dto) {
+    @PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<SubscriptionType> update(@PathVariable("id") Long id, @Valid @RequestBody SubscriptionTypeDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.update(id, dto));
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         subscriptionTypeService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
