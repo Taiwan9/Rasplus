@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -20,25 +22,25 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @PostMapping
+    @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<TokenDto> auth(@RequestBody @Valid LoginDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.auth(dto));
     }
 
-    @PostMapping("/recovery-code/send")
+    @PostMapping(value = "/recovery-code/send", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendRecoveryCode(@RequestBody @Valid UserRecoveryCode dto) {
         customUserDetailsService.sendRecoveryCode(dto.getEmail());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @GetMapping("/recovery-code/password")
+    @GetMapping(value = "/recovery-code/")
     public ResponseEntity<?> recoveryCodeIsValid(@RequestParam ("recoveryCode") String recoveryCode,
                                                  @RequestParam ("email") String email) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(customUserDetailsService.recoveryCodeIsValid(recoveryCode, email));
     }
 
-    @PatchMapping ("/recovery-code/password")
+    @PatchMapping (value = "/recovery-code/password", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendRecoveryCode(@RequestBody @Valid CustomUserDatailsDto dto) {
         customUserDetailsService.updatePasswordByRecoveryCode(dto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
