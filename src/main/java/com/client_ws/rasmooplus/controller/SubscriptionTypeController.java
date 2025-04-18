@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/subscription-type")
 public class SubscriptionTypeController {
@@ -25,7 +28,7 @@ public class SubscriptionTypeController {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<SubscriptionType> findById(@PathVariable("id") Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findById(id));
