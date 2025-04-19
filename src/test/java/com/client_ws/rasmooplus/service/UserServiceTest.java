@@ -21,8 +21,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.FileInputStream;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -104,6 +103,18 @@ class UserServiceTest {
         assertEquals("imgJava.png",userReturned.getPhotoName());
 
         verify(userRepository, times(1)).findById(2L);
+
+    }
+
+    @Test
+    void given_uploadPhoto_when_thereIsUserAndFileItIsNotPNGorJPEG_then_throwBadRequestException() throws Exception {
+        FileInputStream stream =  new FileInputStream("src/test/resources/static/imgJava.png");
+        MockMultipartFile multipartFile = new MockMultipartFile("file","imgJava.txt", MediaType.MULTIPART_FORM_DATA_VALUE, stream);
+
+
+        assertThrows(BadRequestException.class, () -> userService.uploadPhoto(2L, multipartFile));
+
+        verify(userRepository, times(0)).findById(any());
 
     }
 

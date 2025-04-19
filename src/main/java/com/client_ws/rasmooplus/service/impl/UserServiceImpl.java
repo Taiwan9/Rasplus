@@ -21,6 +21,9 @@ import java.util.Random;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final String PNG = ".png";
+    private static final String JPEG = ".jpeg";
+
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
 
@@ -49,11 +52,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User uploadPhoto(Long id, MultipartFile file) throws IOException {
+        String imgName = file.getOriginalFilename();
+        String formatPNG = imgName.substring(imgName.length()-4);
+        String formatJPEG = imgName.substring(imgName.length()-5);
+
+        if(!(PNG.equalsIgnoreCase(formatJPEG) || JPEG.equalsIgnoreCase(formatPNG))){
+            throw new BadRequestException("Imagem deve possuir o formato JPEG ou PNG");
+        }
         User user;
         user = findById(id);
         user.setPhotoName(file.getOriginalFilename());
         user.setPhoto(file.getBytes());
         return user;
+    }
+
+    @Override
+    public byte[] downloadPhoto(long l) {
+        return new byte[0];
     }
 
     private User findById(Long id){
