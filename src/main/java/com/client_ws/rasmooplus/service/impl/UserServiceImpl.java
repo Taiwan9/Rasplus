@@ -14,6 +14,7 @@ import com.client_ws.rasmooplus.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -47,8 +48,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User uploadPhoto(Long id, MultipartFile file) {
-        return null;
+    public User uploadPhoto(Long id, MultipartFile file) throws IOException {
+        User user;
+        user = findById(id);
+        user.setPhotoName(file.getOriginalFilename());
+        user.setPhoto(file.getBytes());
+        return user;
+    }
+
+    private User findById(Long id){
+        return userRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Usuario não encontado"));
     }
 
 }
