@@ -107,6 +107,29 @@ class UserServiceTest {
     }
 
     @Test
+    void given_downloadPhoto_when_thereIsUserAndPhoto_then_returnByteArray() {
+        UserType userType = getUserType();
+        User user = getUser(userType);
+        user.setPhoto(new byte[0]);
+
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
+        assertNotNull(userService.downloadPhoto(2L));
+        verify(userRepository, times(1)).findById(2L);
+
+    }
+
+    @Test
+    void given_downloadPhoto_when_thereIsUserAndThereIsNoPhoto_then_returnThrowBadRequestException() {
+        UserType userType = getUserType();
+        User user = getUser(userType);
+
+        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
+        assertThrows(BadRequestException.class,()-> userService.downloadPhoto(2L));
+        verify(userRepository, times(1)).findById(2L);
+
+    }
+
+    @Test
     void given_uploadPhoto_when_thereIsUserAndFileItIsNotPNGorJPEG_then_throwBadRequestException() throws Exception {
         FileInputStream stream =  new FileInputStream("src/test/resources/static/imgJava.png");
         MockMultipartFile multipartFile = new MockMultipartFile("file","imgJava.txt", MediaType.MULTIPART_FORM_DATA_VALUE, stream);

@@ -1,0 +1,3 @@
+ALTER TABLE `users`
+  ADD COLUMN `photo` MEDIUMBLOB,
+  ADD COLUMN `photo_name` VARCHAR(255);
